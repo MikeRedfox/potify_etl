@@ -1,0 +1,14 @@
+async-timeout
+certifi
+charset-normalizer
+Deprecated
+idna
+packaging
+pyparsing
+redis
+requests
+six
+spotipy
+tinydb
+urllib3
+wrapt

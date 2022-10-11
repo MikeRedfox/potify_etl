@@ -1,0 +1,74 @@
+{
+  "_default": {
+    "1": {
+      "name": "KUMITE",
+      "artist": "Salmo",
+      "album": "FLOP",
+      "date": "1011-10-11",
+      "n": 1
+    },
+    "2": {
+      "name": "SOGNI D'ORO",
+      "artist": "Lazza",
+      "album": "SIRIO",
+      "date": "1011-10-11",
+      "n": 1
+    },
+    "3": {
+      "name": "Senza (feat. En?gma, Slait)",
+      "artist": "Salmo",
+      "album": "Death USB",
+      "date": "1011-10-11",
+      "n": 1
+    },
+    "4": {
+      "name": "Angelina Jolie",
+      "artist": "Bresh",
+      "album": "Angelina Jolie",
+      "date": "1011-10-11",
+      "n": 1
+    },
+    "5": {
+      "name": "CASA",
+      "artist": "Neima Ezza",
+      "album": "CASA",
+      "date": "1011-10-11",
+      "n": 1
+    },
+    "6": {
+      "name": "s!r! (feat. Lazza & Sfera Ebbasta)",
+      "artist": "thasup",
+      "album": "s!r! (feat. Lazza & Sfera Ebbasta)",
+      "date": "1011-10-11",
+      "n": 1
+    },
+    "7": {
+      "name": "LEI (feat. Rondodasosa)",
+      "artist": "Neima Ezza",
+      "album": "Gi\u00f9",
+      "date": "1011-10-11",
+      "n": 1
+    },
+    "8": {
+      "name": "Morto Mai (Piano Solo)",
+      "artist": "Lazza",
+      "album": "Re Mida (Aurum)",
+      "date": "1011-10-11",
+      "n": 1
+    },
+    "9": {
+      "name": "Non Fare Cos\u00ec",
+      "artist": "Capo Plaza",
+      "album": "PLAZA",
+      "date": "1011-10-11",
+      "n": 1
+    },
+    "10": {
+      "name": "A Nightingale Sang In Berkeley Square",
+      "artist": "Southside Players",
+      "album": "A Nightingale Sang In Berkeley Square",
+      "date": "1011-10-11",
+      "n": 1
+    }
+  }
+}
