@@ -13,11 +13,13 @@ client_secret = os.environ['client_secret']
 refresh_token = os.environ['refresh_token']
 redirect_uri = 'http://localhost:8888/callback'
 
-today = datetime.datetime.now()
-yesterday = today - datetime.timedelta(days=1)
-yesterday_unix = int(yesterday.timestamp()) * 1000
+# yesterday = today - datetime.timedelta(days=1)
+# yesterday_unix = int(yesterday.timestamp()) * 1000
 scope = 'user-read-recently-played'
 token = os.environ['auth']
+
+with open('last_unix.txt', 'r') as f:
+    last_time_executed = int(f.read())
 
 
 def normal():
@@ -58,10 +60,16 @@ def get_token():
 def main():
 
     access_token = get_token()
+
+    with open('last_unix.txt', 'w') as f:
+        currentDateTime = datetime.datetime.now()
+        timestamp = datetime.datetime.timestamp(currentDateTime)
+        timestamp = int(timestamp * 1000)
+        f.write(str(timestamp))
+
     sp = spotipy.Spotify(auth=access_token)
 
-    results = sp.current_user_recently_played(limit=50, after=yesterday_unix)
-
+    results = sp.current_user_recently_played(limit=50, after=last_time_executed)
     # Extracting only the relevant bits of data from the json object      
     for song in results["items"]:
         name = song["track"]["name"]

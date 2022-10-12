@@ -12,7 +12,7 @@
       "artist": "Lazza",
       "album": "SIRIO",
       "date": "1011-10-11",
-      "n": 1
+      "n": 2
     },
     "3": {
       "name": "Senza (feat. En?gma, Slait)",
@@ -40,7 +40,7 @@
       "artist": "thasup",
       "album": "s!r! (feat. Lazza & Sfera Ebbasta)",
       "date": "1011-10-11",
-      "n": 1
+      "n": 2
     },
     "7": {
       "name": "LEI (feat. Rondodasosa)",
@@ -61,13 +61,27 @@
       "artist": "Capo Plaza",
       "album": "PLAZA",
       "date": "1011-10-11",
-      "n": 1
+      "n": 3
     },
     "10": {
       "name": "A Nightingale Sang In Berkeley Square",
       "artist": "Southside Players",
       "album": "A Nightingale Sang In Berkeley Square",
       "date": "1011-10-11",
+      "n": 2
+    },
+    "11": {
+      "name": "Cirano",
+      "artist": "Francesco Guccini",
+      "album": "D'Amore Di Morte E Di Altre Sciocchezze",
+      "date": "2022-10-12",
+      "n": 1
+    },
+    "12": {
+      "name": "Lo spazzacamino",
+      "artist": "DJ Myke",
+      "album": "Hocus pocus",
+      "date": "2022-10-12",
       "n": 1
     }
   }
