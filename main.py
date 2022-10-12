@@ -13,8 +13,6 @@ client_secret = os.environ['client_secret']
 refresh_token = os.environ['refresh_token']
 redirect_uri = 'http://localhost:8888/callback'
 
-# yesterday = today - datetime.timedelta(days=1)
-# yesterday_unix = int(yesterday.timestamp()) * 1000
 scope = 'user-read-recently-played'
 token = os.environ['auth']
 
