@@ -5,7 +5,7 @@ import spotipy
 from tinydb import TinyDB, Query
 from spotipy.oauth2 import SpotifyOAuth
 
-db = TinyDB('/home/mike/scripts/spotify_etl/db.json')
+db = TinyDB('./db.json')
 Song = Query()
 
 client_id = os.environ['client_id']
@@ -16,7 +16,7 @@ redirect_uri = 'http://localhost:8888/callback'
 scope = 'user-read-recently-played'
 token = os.environ['auth']
 
-with open('last_unix.txt', 'r') as f:
+with open('./last_unix.txt', 'r') as f:
     last_time_executed = int(f.read())
 
 
@@ -27,13 +27,12 @@ def normal():
         redirect_uri=redirect_uri,
         client_id=client_id,
         client_secret=client_secret,
-        ))
+    ))
 
     results = sp.current_user_recently_played()
     for idx, item in enumerate(results['items']):
         track = item['track']
         print(idx, track['artists'][0]['name'], " – ", track['name'])
-
 
 
 def get_token():
@@ -59,7 +58,7 @@ def main():
 
     access_token = get_token()
 
-    with open('last_unix.txt', 'w') as f:
+    with open('./last_unix.txt', 'w') as f:
         currentDateTime = datetime.datetime.now()
         timestamp = datetime.datetime.timestamp(currentDateTime)
         timestamp = int(timestamp * 1000)
@@ -67,8 +66,9 @@ def main():
 
     sp = spotipy.Spotify(auth=access_token)
 
-    results = sp.current_user_recently_played(limit=50, after=last_time_executed)
-    # Extracting only the relevant bits of data from the json object      
+    results = sp.current_user_recently_played(
+        limit=50, after=last_time_executed)
+    # Extracting only the relevant bits of data from the json object
     for song in results["items"]:
         name = song["track"]["name"]
         artist = song["track"]["album"]["artists"][0]["name"]
@@ -85,7 +85,8 @@ def main():
         else:
             song_id = db.get(Song.name == name).doc_id
             current_n = db.get(doc_id=song_id)['n']
-            db.update({'n':current_n + 1}, doc_ids=[song_id])
-        
+            db.update({'n': current_n + 1}, doc_ids=[song_id])
+
+
 if __name__ == '__main__':
     main()
