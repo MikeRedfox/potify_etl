@@ -3,6 +3,12 @@ name: run main.py
 on:
   schedule:
     - cron: '0 8 * * *' 
+env:
+  client_id: ${{secrets.CLIENT_ID}}
+  client_secret: ${{secrets.CLIENT_SECRET}}
+  auth: ${{secrets.AUTH}}
+  refresh_token: ${{secrets.REFRESH_TOKEN}}
+  
 
 jobs:
   build:
