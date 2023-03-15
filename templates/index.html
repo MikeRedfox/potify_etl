@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canzoni più ascoltate</title>
+</head>
+
+<style>
+    table, th, td {
+  border: 1px solid rgba(245, 245, 245, 0.35);
+  padding-left: 3px;
+  padding-right: 3px;
+  font-weight: 700;
+    }
+    body {
+        background-color: #242936;
+        color: gainsboro;
+    }
+    .center{
+        margin-left: auto;
+        margin-right: auto;
+}
+    h1{
+    text-align: center;
+}
+.center_image {
+  display: block;
+  margin: 0 auto;
+}
+
+</style>
+
+<body>
+
+    <h1>
+        My {{ top_or_bottom }} {{ n }} songs
+
+    </h1>
+    <table class="center">
+        <tr>
+            <th>Titolo</th>
+            <th>Artista</th>
+            <th>Album</th>
+            <th>Numero ascolti personale</th>
+        </tr>
+            
+            {% for idx,song in top.iterrows() %}
+            <tr>
+                <th>{{song['name']}}</th>
+                <th>{{song.artist}}</th>
+                <th>{{song.album}}</th>
+                <th>{{song.n}}</th>
+            </tr>
+            {% endfor %}
+
+
+    </table>
+    <br>
+    <br>
+    <br>
+    <img class='center_image' src="https://source.unsplash.com/random/700x300?music" alt="">
+</body>
+</html>
