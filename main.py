@@ -2,11 +2,24 @@ import datetime
 import os
 import requests
 import spotipy
-from tinydb import TinyDB, Query
+from typing import Optional
+from sqlmodel import Field, SQLModel, create_engine, Session, select
 from spotipy.oauth2 import SpotifyOAuth
+import json
 
-db = TinyDB('./db.json')
-Song = Query()
+
+sqlite_file_name = "spotify.db"
+sqlite_url = f"sqlite:///{sqlite_file_name}"
+
+engine = create_engine(sqlite_url, echo=False)
+
+class Song(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    name: str
+    artist: str
+    album: str
+    date: str
+    n: int
 
 client_id = os.environ['client_id']
 client_secret = os.environ['client_secret']
@@ -53,10 +66,41 @@ def get_token():
     r = requests.post(url, headers=headers, data=data)
     return (access_token := r.json()['access_token'])
 
+def create_table(engine):
+    SQLModel.metadata.create_all(engine)
+    
+def populate_table(engine):
+    session = Session(engine)
+    with open('db.json') as f:
+        data = json.load(f)['_default']
 
-def main():
+    entries = [ Song(id=idx,
+                name=d['name'],
+                artist=d['artist'],
+                album=d['album'],
+                date=d['date'],
+                n=d['n']) for idx,d in data.items()]
+
+    for entry in entries:
+        session.add(entry)
+
+    session.commit()
+    session.close()
+
+def see_table(engine):
+
+    with Session(engine) as session:
+        statement = select(Song)
+        results = session.exec(statement)
+        for song in results:
+            print(song)
+
+
+
+def main(engine):
 
     access_token = get_token()
+    session = Session(engine)
 
     with open('./last_unix.txt', 'w') as f:
         currentDateTime = datetime.datetime.now()
@@ -69,24 +113,34 @@ def main():
     results = sp.current_user_recently_played(
         limit=50, after=last_time_executed)
     # Extracting only the relevant bits of data from the json object
+
     for song in results["items"]:
         name = song["track"]["name"]
         artist = song["track"]["album"]["artists"][0]["name"]
         date = song["played_at"][0:10]
         album = song['track']['album']['name']
 
-        if len(db.search(Song.name == name)) == 0:
-            db.insert({
-                'name': name,
-                'artist': artist,
-                'album': album,
-                'date': date,
-                'n': 1})
-        else:
-            song_id = db.get(Song.name == name).doc_id
-            current_n = db.get(doc_id=song_id)['n']
-            db.update({'n': current_n + 1}, doc_ids=[song_id])
 
+        statement = select(Song).where(Song.name == name)
+
+        try:
+            result = session.exec(statement).one()
+            result.n += 1
+            session.add(result)
+            session.commit()
+            session.refresh(result)
+
+        except sqlalchemy.exc.NoResultFound:
+            new_song = Song(id=idx,
+                name=name,
+                artist=artist,
+                album=album,
+                date=date,
+                n=1)
+            session.add(new_song)
+            session.commit()
+
+    session.close()
 
 if __name__ == '__main__':
-    main()
+    main(engine)
